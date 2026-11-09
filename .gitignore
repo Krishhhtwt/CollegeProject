@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+.env.*
+!.env.example
+
+# Database and backups
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.pre_hybrid_backup
+
+# Logs
+*.log
+
+# Frontend
+node_modules/
+dist/
+build/
+
+# Editor and OS
+.vscode/
+.DS_Store
+
+# Additional local environments
+venv_old/
+*.pyc
+
+# Backup source files
+*.backup
+*.before_*
+*.pre_hybrid_backup
+
+# Local workspace files
+*.code-workspace

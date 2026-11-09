@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUIMS Student Login</title>
+  <style>
+    /* Reset */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #f5f5f5;
+    }
+
+  
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Login card layout */
+    .login-card {
+      display: flex;
+      width: 900px;
+      height: 500px;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Left side content */
+    .left-content {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left-content h2 {
+      margin-bottom: 10px;
+    }
+
+    .left-content p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .left-content input {
+      margin-bottom: 15px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .left-content button {
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-red {
+      background-color: #e53935;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .btn-blue {
+      background-color: #1e88e5;
+      color: white;
+    }
+
+    .separator {
+      text-align: center;
+      margin: 10px 0;
+      color: #888;
+    }
+
+    .store-section img {
+      width: 120px;
+      margin-right: 10px;
+    }
+
+    /* Right side background image */
+    .right-bg {
+      flex: 1;
+      background-image: url('https://image-static.collegedunia.com/public/college_data/images/campusimage/1612767804122221818_3158122514294446_200265785864012498_o.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Optional: Logo styling */
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-card">
+      <!-- Left content -->
+      <div class="left-content">
+        <img src="logo.png" alt="CUIMS Logo" class="logo">
+        <h2>Log in</h2>
+        <p>Welcome to University Information Management System – Mohali Campus</p>
+
+        <input type="text" id="userId" placeholder="Enter User ID">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button id="loginBtn" class="btn-red">NEXT</button>
+
+        <div class="separator">OR</div>
+        <button class="btn-blue">CLICK HERE FOR REGISTRATION</button>
+
+        <div class="store-section">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Download_on_the_App_Store_Badge.svg" alt="App Store">
+        </div>
+      </div>
+
+      <!-- Right background image -->
+      <div class="right-bg"></div>
+    </div>
+  </div>
+</body>
+</html>

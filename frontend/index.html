@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Information Management System</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    
+    .weather-section {
+      background-color: #e50914;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin-top: 40px;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .weather-today {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .weather-today h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .temp {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .condition {
+      text-transform: capitalize;
+    }
+
+    .forecast {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .day {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .day img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .day-name {
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-section">
+    <div class="header">
+      <img src="logo.png" alt="College Logo" class="logo" />
+    </div>
+
+    <div class="login-container">
+      <div class="login-box">
+        <div class="icon">👤</div>
+        <h3>Student/Parent Login</h3>
+        <p>Login with your UID and Password to access your Student Services and Account.</p>
+        <button class="btn" onclick="window.location.href='student-login.html'">Login Now</button>
+      </div>
+
+      <div class="login-box">
+        <div class="icon">👩‍💼</div>
+        <h3>Staff Login</h3>
+        <p>Login using your Employee Code and Password to access your account.</p>
+        <button class="btn" onclick="window.location.href='staff-login.html'">Login Now</button>
+      </div>
+
+      <div class="login-box">
+        <div class="icon">🎓</div>
+        <h3>LMS Login</h3>
+        <p>Login to your LMS using your UID/EmployeeID and CUIMS password.</p>
+        <button class="btn">Login Now</button>
+      </div>
+
+      <div class="login-box">
+        <div class="icon">🖥️</div>
+        <h3>Admission Login</h3>
+        <p>For Admission Staff only. Use your Employee Code and Password to log in.</p>
+        <button class="btn">Login Now</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="extras">
+    <div class="weather-section">
+      <div class="weather-today">
+        <h3>GHARUAN WEATHER</h3>
+        <img id="today-icon" src="" alt="Weather Icon" />
+        <div class="temp" id="today-temp">--°C</div>
+        <div class="condition" id="today-condition">Loading...</div>
+      </div>
+      <div class="forecast" id="forecast"></div>
+    </div>
+  </div>
+
+  
+  <script>
+    const apiKey = "fe8fb366b36c0a66b12492ef94c85b8a"; 
+    const city = "Gharuan";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.cod !== "200") {
+          document.getElementById("today-condition").textContent = "Weather data unavailable";
+          return;
+        }
+
+        // Current Weather
+        const today = data.list[0];
+        const todayTemp = Math.round(today.main.temp);
+        const todayCondition = today.weather[0].description;
+        const todayIcon = `https://openweathermap.org/img/wn/${today.weather[0].icon}@2x.png`;
+
+        document.getElementById("today-temp").textContent = `${todayTemp}°C`;
+        document.getElementById("today-condition").textContent = todayCondition;
+        document.getElementById("today-icon").src = todayIcon;
+
+        // Forecast (next 5 days)
+        const forecastContainer = document.getElementById("forecast");
+        forecastContainer.innerHTML = "";
+
+        const daysSeen = new Set();
+        const dailyData = data.list.filter(item => {
+          const date = new Date(item.dt_txt).toLocaleDateString("en-US", { weekday: "long" });
+          if (!daysSeen.has(date)) {
+            daysSeen.add(date);
+            return true;
+          }
+          return false;
+        }).slice(1, 6);
+
+        dailyData.forEach(day => {
+          const name = new Date(day.dt_txt).toLocaleDateString("en-US", { weekday: "long" });
+          const icon = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`;
+          const temp = Math.round(day.main.temp);
+
+          const html = `
+            <div class="day">
+              <div class="day-name">${name}</div>
+              <img src="${icon}" alt="icon" />
+              <div>${temp}°C</div>
+            </div>
+          `;
+          forecastContainer.innerHTML += html;
+        });
+      })
+      .catch(err => {
+        document.getElementById("today-condition").textContent = "Unable to load weather";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

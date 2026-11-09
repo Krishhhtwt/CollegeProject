@@ -1,0 +1,171 @@
+/* ====== RESET & BASE ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+  color: #222;
+  overflow-x: hidden;
+}
+
+/* ====== HEADER ====== */
+.header {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.logo {
+  width: 130px;
+  height: auto;
+}
+
+/* ====== LOGIN BOXES SECTION ====== */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 40px auto 0;
+  max-width: 1200px;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 260px;
+  padding: 30px 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.login-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.login-box .icon {
+  font-size: 40px;
+  color: #000;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.login-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.login-box p {
+  color: #444;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  background: #e60000;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #b30000;
+}
+
+/* ====== RED WEATHER BAND ====== */
+.weather-section {
+  background: #e60000;
+  color: white;
+  margin-top: 60px;
+  padding: 25px 40px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* LEFT WEATHER INFO */
+.weather-left {
+  text-align: center;
+  flex: 1;
+}
+
+.weather-left h4 {
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.weather-left .temp {
+  font-size: 2rem;
+  margin: 8px 0;
+}
+
+.weather-left p {
+  text-transform: lowercase;
+  font-size: 0.85rem;
+}
+
+/* RIGHT WEATHER DAYS */
+.weather-right {
+  flex: 3;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.weather-right .day {
+  text-align: center;
+  margin: 5px 10px;
+  min-width: 85px;
+}
+
+.weather-right .day span {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .weather-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .weather-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .weather-right .day {
+    margin: 8px;
+  }
+}
