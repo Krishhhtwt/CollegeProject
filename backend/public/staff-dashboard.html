@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Dashboard</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; }
+    .dashboard { display: flex; height: 100vh; }
+    .sidebar { width: 220px; background-color: #c62828; color: white; display: flex; flex-direction: column; }
+    .sidebar h2 { background-color: #b71c1c; text-align: center; padding: 15px; margin: 0; }
+    .sidebar a { color: white; text-decoration: none; padding: 12px 18px; display: block; cursor: pointer; }
+    .sidebar a:hover, .active { background-color: #8e0000; }
+    .main { flex: 1; padding: 20px; overflow-y: auto; }
+
+    h3 { color: #c62828; border-bottom: 2px solid #c62828; padding-bottom: 5px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #ffeaea; }
+
+    .btn { background-color: #c62828; color: white; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; }
+    .btn:hover { background-color: #b71c1c; }
+
+    .notice { background: #fff3f3; border-left: 5px solid #c62828; padding: 10px; display: none; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="sidebar">
+      <h2>Teacher Panel</h2>
+      <a class="active" data-section="profile">👤 Profile</a>
+      <a data-section="timetable">📅 Timetable</a>
+      <a data-section="leave">📝 Leave</a>
+      <a data-section="settings">⚙️ Settings</a>
+      <a data-section="logout">🚪 Logout</a>
+    </div>
+
+    <div class="main">
+      <!-- Profile -->
+      <section id="profile" class="section active">
+        <h3>Profile Info</h3>
+        <p><strong>Name:</strong> Ravi</p>
+        <p><strong>Department:</strong> Mathematics</p>
+        <p><strong>Email:</strong> ravi.maths@college.edu</p>
+      </section>
+
+      <!-- Timetable -->
+      <section id="timetable" class="section" style="display:none;">
+        <h3>Timetable</h3>
+        <table id="timetableTable">
+          <thead>
+            <tr>
+              <th>Day</th><th>Class</th><th>Subject</th><th>Start</th><th>End</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="5" style="text-align:center;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Leave Section -->
+      <section id="leave" class="section" style="display:none;">
+        <h3>Apply for Leave</h3>
+        <label>Date: </label>
+        <input type="date" id="leaveDate"><br><br>
+        <label>Reason: </label><br>
+        <textarea id="leaveReason" rows="3" style="width:100%;"></textarea><br><br>
+        <button class="btn" onclick="applyLeave()">Submit Leave</button>
+        <div id="leaveNotice" class="notice"></div>
+
+        <h3 style="margin-top:30px;">Leave Records</h3>
+        <table id="leaveTable">
+          <thead>
+            <tr><th>Teacher</th><th>Date</th><th>Reason</th><th>Status</th><th>Substitute</th></tr>
+          </thead>
+          <tbody><tr><td colspan="5" style="text-align:center;">Loading...</td></tr></tbody>
+        </table>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="section" style="display:none;">
+        <h3>Settings</h3>
+        <p>Update password or profile (Coming soon).</p>
+      </section>
+
+      <!-- Logout -->
+      <section id="logout" class="section" style="display:none;">
+        <h3>Logout</h3>
+        <p><a href="index.html">Return to Login</a></p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const teacherName = "Ravi";
+
+    // Sidebar navigation
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+        link.classList.add('active');
+        document.getElementById(link.dataset.section).style.display = 'block';
+      });
+    });
+
+    // Load timetable
+    function loadTimetable() {
+      fetch("/api/timetable")
+        .then(r => r.json())
+        .then(data => {
+          const tbody = document.querySelector("#timetableTable tbody");
+          tbody.innerHTML = "";
+          if (data.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No timetable found</td></tr>";
+            return;
+          }
+          data.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.day}</td><td>${row.class_name}</td><td>${row.subject}</td><td>${row.start_time}</td><td>${row.end_time}</td>`;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => console.error("Error loading timetable:", err));
+    }
+
+    // Load leave records
+    function loadLeaves() {
+      fetch("/api/leaves")
+        .then(r => r.json())
+        .then(data => {
+          const tbody = document.querySelector("#leaveTable tbody");
+          tbody.innerHTML = "";
+          if (data.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No leaves found</td></tr>";
+            return;
+          }
+          data.forEach(l => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${l.teacher_name}</td><td>${l.date}</td><td>${l.reason}</td><td>${l.status}</td><td>${l.substitute_teacher}</td>`;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => console.error("Error loading leaves:", err));
+    }
+
+    // Apply for leave
+    function applyLeave() {
+      const date = document.getElementById("leaveDate").value;
+      const reason = document.getElementById("leaveReason").value.trim();
+      const notice = document.getElementById("leaveNotice");
+
+      if (!date || !reason) {
+        alert("⚠️ Please fill all fields.");
+        return;
+      }
+
+      fetch("/api/leave", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teacher_name: teacherName, date, reason })
+      })
+      .then(r => r.json())
+      .then(data => {
+        notice.style.display = "block";
+        notice.textContent = `✅ ${data.message} (Substitute: ${data.substitute})`;
+        loadLeaves();
+      })
+      .catch(err => console.error("Error applying leave:", err));
+    }
+
+    // Auto-load data
+    window.onload = () => {
+      loadTimetable();
+      loadLeaves();
+    };
+  </script>
+</body>
+</html>

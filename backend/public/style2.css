@@ -1,0 +1,157 @@
+/* Reset defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Background setup */
+body {
+  background: url("campus.jpg") no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Transparent overlay for readability */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+/* Center container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Login card styling */
+.login-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Logo styling */
+.login-card img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Heading */
+.login-card h2 {
+  color: #222;
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Input fields */
+.login-card input[type="text"],
+.login-card input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0 18px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.login-card input:focus {
+  border-color: #0078d7;
+  outline: none;
+}
+
+/* Button */
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #0078d7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-card button:hover {
+  background-color: #005fa3;
+}
+
+/* Links */
+.login-card a {
+  display: block;
+  margin-top: 12px;
+  color: #0078d7;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.login-card a:hover {
+  text-decoration: underline;
+}
+
+/* Tabs for Student / Staff */
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #e0e0e0;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-buttons button.active {
+  background: #0078d7;
+  color: white;
+}
+
+.tab-buttons button:hover {
+  background: #0078d7;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    width: 85%;
+    padding: 30px 20px;
+  }
+
+  .login-card h2 {
+    font-size: 1.4rem;
+  }
+}

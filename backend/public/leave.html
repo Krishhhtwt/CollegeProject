@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .portal { max-width: 1000px; margin: 30px auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+    .portal h2 { margin-bottom:12px }
+    .grid { display:grid; grid-template-columns: 1fr 380px; gap:18px }
+    .card { background:#fafafa; padding:12px; border-radius:8px; }
+    label{display:block; font-weight:600; margin-top:8px}
+    input, select, textarea{width:100%; padding:8px; margin-top:6px; border-radius:6px; border:1px solid #ddd}
+    .small{font-size:0.9rem;color:#555}
+    .btn-row{display:flex; gap:8px; margin-top:10px}
+    .chip{display:inline-block;padding:6px 10px;border-radius:16px;background:#e6e6e6;margin-right:6px}
+    .notice{padding:8px;background:#fff8e6;border-left:4px solid #ffcf33;margin-bottom:10px}
+    .history-list{max-height:260px; overflow:auto}
+    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+    .day-box{min-height:80px;padding:6px;border-radius:6px;background:#fff;border:1px solid #eee}
+    .status-approved{color:green;font-weight:700}
+    .status-pending{color:orange;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <h2>Automated Leave, Attendance & Workload Balancing</h2>
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Submit Leave Request</h3>
+          <div class="notice small">Auto-approval may be applied based on team workload and deadlines.</div>
+          <label for="empName">Your Name</label>
+          <input id="empName" placeholder="Employee Name" />
+
+          <label for="startDate">Start Date</label>
+          <input id="startDate" type="date" />
+
+          <label for="endDate">End Date</label>
+          <input id="endDate" type="date" />
+
+          <label for="reason">Reason</label>
+          <textarea id="reason" rows="3" placeholder="Brief reason"></textarea>
+
+          <label for="projectImpact">Project Impact</label>
+          <select id="projectImpact">
+            <option value="none">No critical impact</option>
+            <option value="low">Low - non-blocking</option>
+            <option value="medium">Medium - some blockers</option>
+            <option value="high">High - critical deadline</option>
+          </select>
+
+          <div class="btn-row">
+            <button class="btn" onclick="submitLeaveLocal()">Submit Request</button>
+            <button class="btn" onclick="resetLeaveForm()">Reset</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Workload Analyzer</h3>
+          <div id="workloadSummary" class="small">Loading workload...</div>
+          <div id="workloadChips" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Impact Visualization (Simplified)</h3>
+          <div id="impactViz" class="small">No selections yet</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>substitute availability
+        
+          </h3>
+          <div class="small">Shows upcoming leaves and availability</div>
+          <div id="calendar" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Leave History</h3>
+          <div id="history" class="history-list small"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Manager Controls</h3>
+          <div class="small">Auto-approval Threshold</div>
+          <input id="threshold" type="number" min="0" max="100" value="50" />
+          <div class="small" style="margin-top:8px">If team availability &gt; threshold (%) then auto-approve.</div>
+          <div class="btn-row" style="margin-top:8px">
+            <button class="btn" onclick="applyAutoApproveSettings()">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
