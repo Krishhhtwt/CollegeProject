@@ -8,7 +8,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_FOLDER = os.path.expanduser("~/CollegeProject/frontend")
+FRONTEND_FOLDER = os.path.join(BASE_DIR, "public")
 DB_PATH = os.path.join(BASE_DIR, "college.db")
 
 
